@@ -76,9 +76,9 @@ def callAdzunaAPI(keyword, location):
     params = {
         "app_id": app_id,
         "app_key": app_key,
-        "results_per_page": 2,
-        # "what": keyword,
-        # "location0" : location
+        "results_per_page": 100,
+        "what": keyword,
+        "where" : location
     }
     response = requests.get(host, params=params)
     if response.status_code == 200:
@@ -98,11 +98,11 @@ def callAdzunaAPI(keyword, location):
                     (
                         data["results"][i]["title"],
                         data["results"][i]["company"]["display_name"],
-                        data["results"][i]["salary_min"],
+                        data["results"][i]["salary_is_predicted"],
                         data["results"][i]["redirect_url"],
                         data["results"][i]["location"]["display_name"],
                         data["results"][i]["description"],
-                        data["results"][i]["redirect_url"]  # Paramètre pour la condition WHERE NOT EXISTS
+                        data["results"][i]["redirect_url"]
                     )
                 )
                 conn.commit()
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         cursor = conn.cursor()
 
         callJoobleApi(["Science,IT,IA"], "Paris")
-        callAdzunaAPI(["It,Data"],"Paris")
+        callAdzunaAPI(["It,Data"],"75000")
 
         cursor.close()
         conn.close()
