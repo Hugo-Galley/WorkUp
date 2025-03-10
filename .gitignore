@@ -43,6 +43,6 @@ ENV/
 env/
 .env
 
-# Fichiers sensibles ou personnels
+# Fichiers sensibles
 variables.json
 .DS_Store
